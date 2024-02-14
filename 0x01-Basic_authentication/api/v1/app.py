@@ -32,7 +32,7 @@ def unauthorize_page(error) -> str:
 def forbidden(error) -> str:
     '''view function for forbidden
     '''
-    return jsonify({'err': 'Forbidden'})
+    return jsonify({'err': 'Forbidden'}), 403
 
 
 if __name__ == "__main__":
