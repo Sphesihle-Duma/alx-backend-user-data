@@ -20,8 +20,12 @@ class Auth:
         striped_path = path.rstrip('/')
         for exclude_path in excluded_paths:
             path_in_list = exclude_path.rstrip('/')
-            if striped_path == path_in_list:
-                return False
+            if path_in_list.endswith('*'):
+                if striped_path.startswith(path_in_list[:-1]):
+                    return False
+            else:
+                if striped_path == path_in_list:
+                    return False
         return True
 
     def authorization_header(self, request=None) -> str:
