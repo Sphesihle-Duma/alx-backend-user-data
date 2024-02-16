@@ -52,7 +52,7 @@ class BasicAuth(Auth):
         if len(splited) > 2:
             username = splited.pop(0)
             password = ':'.join(splited)
-            return (username, password  )
+            return (username, password)
         return (splited[0], splited[1])
 
     def user_object_from_credentials(
