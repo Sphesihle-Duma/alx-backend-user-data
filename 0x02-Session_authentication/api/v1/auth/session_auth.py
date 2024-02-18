@@ -6,6 +6,7 @@ from api.v1.auth.auth import Auth
 import uuid
 from models.user import User
 
+
 class SessionAuth(Auth):
     '''SessionAuth class
     '''
