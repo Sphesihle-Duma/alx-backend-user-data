@@ -49,6 +49,7 @@ def delete_user(user_id: str = None) -> str:
       - empty JSON is the User has been correctly deleted
       - 404 if the User ID doesn't exist
     """
+    print(user_id)
     if user_id is None:
         abort(404)
     user = User.get(user_id)
