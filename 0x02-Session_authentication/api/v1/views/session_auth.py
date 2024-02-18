@@ -39,3 +39,12 @@ def login():
     response.set_cookie(SESSION_NAME, session_id)
 
     return response
+
+    @app_views.route('/auth_session/logout')
+    def logout():
+        ''' deleting a session
+        '''
+        from api.vi.app import auth
+        if not auth.destroy_session(request):
+            abort(404)
+        return jsonify({}), 200
