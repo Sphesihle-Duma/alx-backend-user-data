@@ -40,11 +40,13 @@ def login():
 
     return response
 
-    @app_views.route('/auth_session/logout')
+    @app_views.route('/auth_session/logout',
+                     methods=['DELETE'], strict_slashes=False)
     def logout():
         ''' deleting a session
         '''
         from api.vi.app import auth
         if not auth.destroy_session(request):
+            print('Entering the 404')
             abort(404)
         return jsonify({}), 200
