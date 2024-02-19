@@ -58,3 +58,17 @@ class DB():
             return user
         except InvalidRequestError:
             raise
+
+    def update_user(self, user_id: int, **kwargs) -> None:
+        ''' Updating user based on user_id
+        '''
+        try:
+            user = self.find_user_by(id=user_id)
+        except Exception:
+            raise
+        try:
+            update_data = {getattr(User, key): value for key, value in kwargs.items()}
+            self._session.query(User).filter(User.id == user_id).update(update_data)
+            self._session.commit()
+        except ValueError:
+            raise
