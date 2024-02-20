@@ -41,10 +41,9 @@ class DB():
            Return
               User object
         '''
-        new_session = self._session
         user = User(email, hashed_password)
-        new_session.add(user)
-        new_session.commit()
+        self._session.add(user)
+        self._session.commit()
         return user
 
     def find_user_by(self, **kwargs):
