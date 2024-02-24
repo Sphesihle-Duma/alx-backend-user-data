@@ -2,7 +2,10 @@
 '''
    A basic flask app
 '''
-from flask import Flask, jsonify, request, abort, redirect, url_for
+from flask import (
+        Flask, jsonify,
+        request, abort, redirect,
+        url_for, make_response)
 from auth import Auth
 
 
@@ -49,7 +52,12 @@ def login():
             if user:
                 AUTH.destroy_session(user.id)
                 return redirect(url_for('home'))
-            abort(403)
+            else:
+                response = make_response(
+                        redirect(url_for('home')))
+                response.set_cookie('session', '', expires=0)
+                return response, 403
+        abort(403)
 
     email = request.form['email']
     password = request.form['password']
