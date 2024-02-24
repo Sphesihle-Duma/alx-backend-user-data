@@ -48,7 +48,8 @@ def login():
             user = AUTH.get_user_from_session_id(cookie_session_id)
             if user:
                 AUTH.destroy_session(user.id)
-                return redirect(url_for('home'))
+                return redirect(url_for('home')) 
+            abort(403)
 
     email = request.form['email']
     password = request.form['password']
