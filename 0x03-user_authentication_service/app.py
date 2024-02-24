@@ -42,7 +42,7 @@ def login():
       create a session for user
       with valid logins
     '''
-    if method == 'DELETE':
+    if request.method == 'DELETE':
         cookie_session_id = request.cookies.get('session_id')
         if cookie_session_id:
             user = AUTH.get_user_from_session_id(cookie_session_id)
