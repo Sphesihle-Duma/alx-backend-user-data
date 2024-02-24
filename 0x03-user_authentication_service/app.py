@@ -60,11 +60,14 @@ def login():
         abort(403)
 
     email = request.form['email']
+    print(f'The email is {email}')
     password = request.form['password']
+    print(password)
     if email and password:
         validated_user = AUTH.valid_login(
                 email=email,
                 password=password)
+        print(f'The user is validated? {validated_user}')
         if validated_user:
             session_id = AUTH.create_session(email)
             response = jsonify(
@@ -72,6 +75,18 @@ def login():
             response.set_cookie('session_id', session_id)
             return response, 200
     abort(401)
+
+
+@app.route('/profile')
+def profile():
+    ''' view function for user profile
+    '''
+    session_id = request.cookies.get('session_id')
+    if session_id:
+        user = AUTH.get_user_from_session(session_id)
+        if user:
+            return jsonify({'email': user.email})
+    abort(403)
 
 
 if __name__ == '__main__':
