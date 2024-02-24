@@ -60,14 +60,11 @@ def login():
         abort(403)
 
     email = request.form['email']
-    print(f'The email is {email}')
     password = request.form['password']
-    print(password)
     if email and password:
         validated_user = AUTH.valid_login(
                 email=email,
                 password=password)
-        print(f'The user is validated? {validated_user}')
         if validated_user:
             session_id = AUTH.create_session(email)
             response = jsonify(
