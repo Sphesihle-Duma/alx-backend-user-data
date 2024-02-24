@@ -2,7 +2,7 @@
 '''
    A basic flask app
 '''
-from flask import Flask, jsonify, request, abort
+from flask import Flask, jsonify, request, abort, redirect, url_for
 from auth import Auth
 
 
@@ -36,12 +36,20 @@ def register_user():
             return jsonify({"message": "email already registered"}), 400
 
 
-@app.route('/sessions', methods=['POST'], strict_slashes=False)
+@app.route('/sessions', methods=['POST', 'DELETE'], strict_slashes=False)
 def login():
     '''
       create a session for user
       with valid logins
     '''
+    if method == 'DELETE':
+        cookie_session_id = request.cookies.get('session_id')
+        if cookie_session_id:
+            user = AUTH.get_user_from_session_id(cookie_session_id)
+            if user:
+                AUTH.destroy_session(user.id)
+                return redirect(url_for('home'))
+
     email = request.form['email']
     password = request.form['password']
     if email and password:
